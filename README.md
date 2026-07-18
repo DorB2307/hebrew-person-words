@@ -2,6 +2,34 @@
 
 Scripts for counting first-, second-, and third-person words in Hebrew transcripts using an ensemble of [Stanza](https://stanfordnlp.github.io/stanza/) and [IAHLT UDPipe](https://github.com/IAHLT/iahlt_coref_he) morphological tagging. Only tokens where **both** taggers agree on the same span and person label are kept (consensus).
 
+## Prerequisites (ensemble script)
+
+To run `person_words_ensemble.py` you need:
+
+1. **Python 3** (3.10+ recommended)
+2. **Python packages**
+   - `stanza` — Hebrew POS / morphology
+   - `ufal.udpipe` — IAHLT tokenizer + tagger
+   - `conllu` — parse UDPipe CoNLL-U output  
+   Install with:
+   ```bash
+   pip install stanza ufal.udpipe conllu
+   # or install the bundled package (pulls in ufal.udpipe + conllu):
+   pip install ./iahlt_coref_he-main
+   ```
+3. **Stanza Hebrew model** — downloaded automatically on first run (`stanza.download("he")`)
+4. **IAHLT `tokenizer.udpipe` model file** at:
+   ```text
+   iahlt_coref_he-main/models/tokenizer.udpipe
+   ```
+   Download from [Google Drive](https://drive.google.com/file/d/1jNQ3LfjQ0dZp1B3N54KLFy0Qw9-DN-t3/view), extract, and place `tokenizer.udpipe` in that folder.  
+   (The full `coref_model/` directory is **not** required for the person-word ensemble.)
+
+Optional, only for batch spreadsheet runs (`person_by_label.py`):
+
+- `pandas`, `openpyxl`
+- input file `audio_segments_with_label.xlsx`
+
 ## Setup
 
 ```bash
@@ -14,7 +42,7 @@ pip install ./iahlt_coref_he-main
 Download the IAHLT models from [Google Drive](https://drive.google.com/file/d/1jNQ3LfjQ0dZp1B3N54KLFy0Qw9-DN-t3/view), extract them, and place:
 
 - `tokenizer.udpipe` → `iahlt_coref_he-main/models/tokenizer.udpipe`
-- `coref_model/` → `iahlt_coref_he-main/models/coref_model/`
+- `coref_model/` → `iahlt_coref_he-main/models/coref_model/` (optional for person-word scripts)
 
 (The large model files are not included in this repo.)
 
